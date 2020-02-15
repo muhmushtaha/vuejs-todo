@@ -9,15 +9,25 @@
       :count="remainingTodosCount()"
     />
     <p class="no-todos" v-if="todos.length === 0">No todos.</p>
-    <ul class="todos__list" v-if="todos.length !== 0">
-      <li class="todos__list-item" v-for="todo in todos" v-bind:key="todo.id">
-        <TodoItem
-          :todo="todo"
-          v-on:delete-todo="deleteTodo"
-          v-on:toggle-is-completed="toggleIsCompleted"
-        />
-      </li>
-    </ul>
+    <Dragable
+      v-model="todos"
+      tag="ul"
+      class="todos__list"
+      v-bind="dragOptions"
+      @start="startDrag"
+      @end="endDrag"
+      v-if="todos.length !== 0"
+    >
+      <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+        <li class="todos__list-item list-group-item" v-for="todo in todos" :key="todo.id">
+          <TodoItem
+            :todo="todo"
+            v-on:delete-todo="deleteTodo"
+            v-on:toggle-is-completed="toggleIsCompleted"
+          />
+        </li>
+      </transition-group>
+    </Dragable>
   </div>
 </template>
 <script>
@@ -25,17 +35,27 @@ import uuid from "uuid";
 import TodoItem from "./todoItem";
 import AddTodo from "../addTodo";
 import TodosFilter from "../todosFilter";
+import Dragable from "vuedraggable";
 
 export default {
   name: "TodoList",
   components: {
     TodoItem,
     AddTodo,
-    TodosFilter
+    TodosFilter,
+    Dragable
   },
+  display: "Transitions",
   data() {
     return {
-      todos: []
+      todos: [],
+      drag: false,
+      dragOptions: {
+        animation: 200,
+        group: "description",
+        disabled: false,
+        ghostClass: "ghost"
+      }
     };
   },
   mounted: function() {
@@ -88,6 +108,13 @@ export default {
     remainingTodosCount: function() {
       const todos = this.getTodosFromStorage();
       return todos.filter(todo => !todo.isCompleted).length;
+    },
+    startDrag: function() {
+      this.drag = false;
+    },
+    endDrag: function() {
+      this.drag = false;
+      this.saveTodosToStorage(this.todos);
     }
   }
 };
@@ -116,5 +143,12 @@ export default {
       }
     }
   }
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+.list-group-item {
+  cursor: move;
 }
 </style>
