@@ -9,13 +9,7 @@
         v-model="text"
         placeholder="Learn VueJS"
       />
-    </div>
-    <div class="form-group">
-      <button
-        v-bind="{ 'disabled' : text.trim().length === 0 }"
-        class="submit-btn"
-        type="submit"
-      >Submit</button>
+      <button :disabled="text.trim().length === 0" class="submit-btn" type="submit">Submit</button>
     </div>
   </form>
 </template>
@@ -47,7 +41,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   .form-group {
     label {
       padding-right: 8px;
