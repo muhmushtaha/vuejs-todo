@@ -39,6 +39,7 @@ export default {
     line-height: 1.5;
     &.is-completed {
       text-decoration: line-through;
+      color: #979797;
     }
   }
   &__actions {
@@ -57,6 +58,7 @@ export default {
       width: 14px;
       height: 14px;
       margin-left: 6px;
+      cursor: pointer;
     }
   }
 }
