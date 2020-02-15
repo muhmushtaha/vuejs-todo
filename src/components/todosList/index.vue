@@ -44,7 +44,8 @@ export default {
   },
   computed: {
     remainingTodosCount: function() {
-      return this.todos.filter(todo => !todo.isCompleted).length;
+      const todos = this.getTodosFromStorage();
+      return todos.filter(todo => !todo.isCompleted).length;
     }
   },
   methods: {
