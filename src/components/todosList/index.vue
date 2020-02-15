@@ -6,7 +6,7 @@
       v-on:show-all="showAll"
       v-on:show-completed="showCompleted"
       v-on:show-active="showActive"
-      :count="remainingTodosCount"
+      :count="remainingTodosCount()"
     />
     <p class="no-todos" v-if="todos.length === 0">No todos.</p>
     <ul class="todos__list" v-if="todos.length !== 0">
@@ -40,12 +40,6 @@ export default {
   },
   mounted: function() {
     this.todos = this.getTodosFromStorage();
-  },
-  computed: {
-    remainingTodosCount: function() {
-      const todos = this.getTodosFromStorage();
-      return todos.filter(todo => !todo.isCompleted).length;
-    }
   },
   methods: {
     getTodosFromStorage: function() {
@@ -90,6 +84,10 @@ export default {
         return todo;
       });
       this.saveTodosToStorage(this.todos);
+    },
+    remainingTodosCount: function() {
+      const todos = this.getTodosFromStorage();
+      return todos.filter(todo => !todo.isCompleted).length;
     }
   }
 };
