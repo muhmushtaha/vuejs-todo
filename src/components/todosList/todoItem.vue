@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="item__actions">
-      <i class="fa fa-trash" @click="deleteTodo"></i>
+      <img class="trash" src="https://img.icons8.com/android/24/000000/trash.png" />
       <input type="checkbox" name="check" @click="toggleIsCompleted" :checked="todo.isCompleted" />
     </div>
     <p v-bind:class="{ 'is-completed': todo.isCompleted }" class="text">{{todo.text}}</p>
@@ -45,19 +45,16 @@ export default {
   &__actions {
     display: flex;
     justify-content: flex-start;
-    margin-right: 8px;
-    i {
-      padding-left: 6px;
+    align-items: center;
+    margin-right: 16px;
+    .trash {
       cursor: pointer;
-      font-size: 12px;
-      &.fa-trash {
-        color: #d0021b;
-      }
+      width: 16px;
     }
     input[type="checkbox"] {
       width: 14px;
       height: 14px;
-      margin-left: 6px;
+      margin-left: 8px;
       cursor: pointer;
     }
   }
