@@ -2,7 +2,7 @@
   <div class="item">
     <div class="item__actions">
       <i class="fa fa-trash" @click="deleteTodo"></i>
-      <input type="checkbox" name="check" @click="checkTodo" />
+      <input type="checkbox" name="check" @click="toggleIsCompleted" :checked="todo.isCompleted" />
     </div>
     <p v-bind:class="{ 'is-completed': todo.isCompleted }" class="text">{{todo.text}}</p>
   </div>
@@ -11,15 +11,10 @@
 <script>
 export default {
   name: "TodoItem",
-  data() {
-    return {
-      isCompleted: false
-    };
-  },
   props: ["todo"],
   methods: {
-    checkTodo() {
-      this.todo.isCompleted = !this.todo.isCompleted;
+    toggleIsCompleted() {
+      this.$emit("toggle-is-completed", this.todo.id);
     },
     deleteTodo() {
       this.$emit("delete-todo", this.todo.id);
