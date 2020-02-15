@@ -2,6 +2,7 @@
   <form @submit="handleSubmit" class="form">
     <div class="form-group">
       <input
+        autofocus
         class="input"
         type="text"
         name="todo"
