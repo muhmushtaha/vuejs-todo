@@ -1,7 +1,7 @@
 <template>
   <div class="filter-section">
     <div class="cont">
-      <p>{{count}} {{count | pluralized}} left</p>
+      <p @click="showActive">{{count}} {{count | pluralized}} left</p>
     </div>
     <div class="filter-actions">
       <button @click="showAll" class="action-btn">Show All</button>
@@ -56,6 +56,11 @@ export default {
     &:last-child {
       margin-right: 0;
     }
+  }
+}
+.cont {
+  p {
+    cursor: pointer;
   }
 }
 </style>
