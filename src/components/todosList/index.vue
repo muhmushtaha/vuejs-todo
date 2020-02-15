@@ -3,7 +3,6 @@
     <h2 class="title">Todos List</h2>
     <AddTodo v-on:add-todo="addTodo" />
     <TodosFilter
-      v-if="todos.length !== 0"
       v-on:show-all="showAll"
       v-on:show-completed="showCompleted"
       v-on:show-active="showActive"
