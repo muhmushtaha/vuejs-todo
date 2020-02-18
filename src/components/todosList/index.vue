@@ -8,7 +8,7 @@
       v-on:show-active="showActive"
       :count="remainingTodosCount()"
     />
-    <p class="no-todos" v-if="todos.length === 0">No todos.</p>
+    <EmptyState class="no-todos" :activeTab='activeTab' v-if="todos.length === 0" />
     <Dragable
       v-model="todos"
       tag="ul"
@@ -35,6 +35,7 @@ import uuid from "uuid";
 import TodoItem from "./todoItem";
 import AddTodo from "../addTodo";
 import TodosFilter from "../todosFilter";
+import EmptyState from "./emptyState";
 import Dragable from "vuedraggable";
 
 export default {
@@ -43,12 +44,14 @@ export default {
     TodoItem,
     AddTodo,
     TodosFilter,
-    Dragable
+    Dragable,
+    EmptyState
   },
   display: "Transitions",
   data() {
     return {
       todos: [],
+      activeTab: "all",
       drag: false,
       dragOptions: {
         animation: 200,
@@ -79,14 +82,17 @@ export default {
       this.saveTodosToStorage(this.todos);
     },
     showAll() {
+      this.activeTab = "all";
       this.todos = this.getTodosFromStorage();
     },
     showCompleted() {
       const todos = this.getTodosFromStorage();
+      this.activeTab = "completed";
       this.todos = todos.filter(todo => todo.isCompleted);
     },
     showActive() {
       const todos = this.getTodosFromStorage();
+      this.activeTab = "active";
       this.todos = todos.filter(todo => !todo.isCompleted);
     },
     deleteTodo(id) {

@@ -6,7 +6,7 @@
         class="input"
         type="text"
         name="todo"
-        id="todo"
+        id="todo-input"
         v-model="text"
         placeholder="Learn VueJS"
       />
